@@ -3,6 +3,8 @@ import time
 from behave import *
 from selenium import webdriver
 
+from Utilities import ConfigReader
+
 
 # def before_all(context):
 #     print("Starting test execution: opening browser")
@@ -17,16 +19,22 @@ from selenium import webdriver
 
 def before_scenario(context, scenario):
    print("Starting test execution: opening browser")
-   context.driver=webdriver.Chrome()
+   browserName = ConfigReader.read_configuration("basic info", "browser")
+
+   if browserName == "chrome":
+      context.driver = webdriver.Chrome()
+   elif browserName == "firefox":
+      context.driver = webdriver.Firefox()
+   elif browserName == "edge":
+      context.driver = webdriver.Edge()
    context.driver.maximize_window()
-   context.driver.get("https://www.saucedemo.com/")
    time.sleep(5)
 
 
 def after_scenario(context, scenario):
    print("Starting test execution: opening browser")
    time.sleep(2)
-   context.driver.close()
+   context.driver.quit()
 
 
 

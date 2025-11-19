@@ -1,6 +1,7 @@
 import time
 from behave import given, when, then
 
+from Utilities import ConfigReader
 from features.pages import Home
 from features.pages.Home import SwagLabHomepage
 from features.pages.Login import SwagLabLogin
@@ -8,7 +9,9 @@ from features.pages.Login import SwagLabLogin
 
 @given(u'User is on the Login page')
 def step_impl(context):
-    context.driver.get("https://www.saucedemo.com/")
+    urlValue = ConfigReader.read_configuration("basic info", "url")
+    context.driver.get(urlValue)
+
 
 @when(u'User enter "{username}"the Username')
 def step_impl(context,username):
@@ -31,3 +34,38 @@ def step_impl(context,expLogoText):
     context.home = SwagLabHomepage(context.driver)
     actLogoText = context.home.getAPPtext()
     assert actLogoText == actLogoText, f"Failed act={actLogoText} & exp={expLogoText}"
+
+
+
+
+@given(u'User is on the Login page of SwagLab App')
+def step_impl(context):
+    context.driver.get("https://www.saucedemo.com/")
+
+
+
+@when(u'User enter username "{username1}"on Swaglab login page')
+def step_impl(context,username1):
+    context.login = SwagLabLogin(context.driver)
+    context.login.inpAPPloginUN(username1)
+    time.sleep(2)
+
+
+@when(u'User enter password "{password1}" Swaglab login page')
+def step_impl(context,password1):
+    context.login = SwagLabLogin(context.driver)
+    context.login.inpAPPloginPWD(password1)
+    time.sleep(2)
+
+
+@when(u'User click the Login Button on the Swag lab login page')
+def step_impl(context):
+    context.login.clickAPPloginBUTTON()
+
+
+
+@then(u'error msg is visible')
+def step_impl(context):
+    actResult=context.login.geterrMsgDisplayed()
+    assert actResult ,"failed-Error msg not Visible"
+
