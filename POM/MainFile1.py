@@ -1,8 +1,11 @@
 import time
 from selenium import webdriver
-from Login import SwagLabLogin
-from Homepage import SwagLabHomepage
-from POM import Login, Homepage
+# from Login import SwagLabLogin
+# from Home import SwagLabHomepage
+# from POM import Login, Home
+from features.pages import Login, Home
+
+from features.pages import Login
 
 driver=webdriver.Chrome()
 driver.get("https://www.saucedemo.com/")

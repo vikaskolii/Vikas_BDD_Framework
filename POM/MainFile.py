@@ -1,8 +1,7 @@
 import time
 from selenium import webdriver
-from Login import SwagLabLogin
-from Homepage import SwagLabHomepage
-from POM import Login, Homepage
+
+from features.pages import Login, Home
 
 driver=webdriver.Chrome()
 driver.get("https://www.saucedemo.com/")
@@ -17,7 +16,7 @@ login.clickAPPloginBUTTON()
 time.sleep(3)
 
 #Here we call constructor Homepage()---->POM-2
-home=Homepage.SwagLabHomepage(driver)
+home=Home.SwagLabHomepage(driver)
 
 actLogoText=home.getAPPtext()
 expLogoText = "Swag Labs"
